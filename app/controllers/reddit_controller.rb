@@ -5,7 +5,11 @@ class RedditController < ApplicationController
   before_action :pagination_params
 
   def top
-    response = HTTParty.get(REDDIT_URL + "all/.json?count=50")
+    response = HTTParty.get(REDDIT_URL + "all/.json?count=50", {
+      "headers": {
+        "User-Agent" => 'reddit-app:v0.0.(by/u/pablo_donaire29)'
+      }
+    })
     begin
       limit = pagination_params[:limit] ? pagination_params[:limit] : "50"
       page = pagination_params[:page] ? pagination_params[:page] : "1"
